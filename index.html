@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
-
-    <title>Hello World</title>
-
-    <style>
-      body {
-        border: 1px solid black;
-      }
-    </style>
-
-    <!-- Inline scripts are forbidden in Firefox OS apps (CSP restrictions),
-         so we use a script file. -->
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,orientation='landscape'">
+    <link href="style.css" rel="stylesheet" type="text/css">
     <script src="app.js" defer></script>
+    <title>Basic Calculator</title>
+</head>
 
-  </head>
-
-  <body>
-    <!-- This code is in the public domain. Enjoy! -->
-    <h1>Hello World</h1>
-  </body>
+<body>
+<div id="display">
+    <p id="text">算式</p>
+    <p id="result">結果</p>
+</div>
+<div id="buttons">
+    <button class="button">MC</button>
+    <button class="button">MR</button>
+    <button class="button">M+</button>
+    <button class="button">M-</button>
+    <button class="button">C</button>
+    <button class="button">+/-</button>
+    <button class="button">%</button>
+    <button class="button">←</button>
+    <button class="button">7</button>
+    <button class="button">8</button>
+    <button class="button">9</button>
+    <button class="button">÷</button>
+    <button class="button">4</button>
+    <button class="button">5</button>
+    <button class="button">6</button>
+    <button class="button">×</button>
+    <button class="button">1</button>
+    <button class="button">2</button>
+    <button class="button">3</button>
+    <button class="button">-</button>
+    <button class="button">0</button>
+    <button class="button">.</button>
+    <button class="button">=</button>
+    <button class="button">+</button>
+</div>
+</body>
 
 </html>
