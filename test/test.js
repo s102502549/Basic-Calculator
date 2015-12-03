@@ -3,23 +3,6 @@ var cal = require('../calculator.js')
 
 describe('test Caculator protype function', function () {
     describe('good user', function () {
-        describe('test isValidExpression()', function () {
-            it('2+3  (simple)', function () {
-                assert.equal(true, cal.isValidExpression("2+3"));
-            })
-            it('+3+2  (head operator)', function () {
-                assert.equal(true, cal.isValidExpression("+3+2"));
-            })
-            it('2×+3  (repeat operator)', function () {
-                assert.equal(true, cal.isValidExpression("2×+3"));
-            })
-            it('2×.3  (short dot)', function () {
-                assert.equal(true, cal.isValidExpression("2×+3"));
-            })
-            it('2+3-2%×13÷100  (complex)', function () {
-                assert.equal(true, cal.isValidExpression("2+3-2%×13÷100"));
-            })
-        })
         describe('test calculate()', function () {
             it('2+3  (simple)', function () {
                 assert.equal("5", cal.calculate("2+3"));
@@ -42,35 +25,6 @@ describe('test Caculator protype function', function () {
         })
     })
     describe('garbage user', function () {
-        describe('test isValidExpression()', function () {
-            it('×2+3  (head operator)', function () {
-                assert.equal(false, cal.isValidExpression("2+3.+2"));
-            })
-            it('2+  (lack of operand)', function () {
-                assert.equal(false, cal.isValidExpression("2+"));
-            })
-            it('2+3.+2  (lack of operand)', function () {
-                assert.equal(false, cal.isValidExpression("2+3.+2"));
-            })
-            it('2%.3+2  (%.)', function () {
-                assert.equal(false, cal.isValidExpression("2%.3+2"));
-            })
-            it('2%+4%%+%+2%  (lack of operand)', function () {
-                assert.equal(false, cal.isValidExpression("2%+4%%+%+2%"));
-            })
-            it('2%%-3%+4%%%  (repeat %)', function () {
-                assert.equal(false, cal.isValidExpression("2%%-3%+4%%%"));
-            })
-            it('2++3  (repeat operator)', function () {
-                assert.equal(false, cal.isValidExpression("2++3"));
-            })
-            it('2%3  (lack of operator)', function () {
-                assert.equal(false, cal.isValidExpression("2%3"));
-            })
-            it('2..3  (repeat dot)', function () {
-                assert.equal(false, cal.isValidExpression("2..3"));
-            })
-        })
         describe('test calculate()', function () {
             it('2+  (error)', function () {
                 assert.equal("error", cal.calculate("2+"));

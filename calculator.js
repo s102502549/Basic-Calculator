@@ -152,33 +152,9 @@ function Calculator() {
 
 Calculator.prototype =
 {
-    isValidExpression: function (expression) {
-        //operator must have digit follow them
-        if (/[\.\+\-×÷][×÷%]/.test(expression))
-            return false;
-        //dot cannot have .+- follow them
-        if (/\.[\.\+\-]/.test(expression))
-            return false;
-        //+- cannot repeat
-        if (/[\+\-][\+\-]/.test(expression))
-            return false;
-        //% cannot have digit or dot follow them
-        if (/%[\d\.%]/.test(expression))
-            return false;
-        //first char cannot be × ÷ %
-        if (expression[0] == '×' || expression[0] == '÷' || expression[0] == '%')
-            return false;
-        //last char must be number or %
-        if (expression[expression.length - 1] == '+' || expression[expression.length - 1] == '-' || expression[expression.length - 1] == '×' || expression[expression.length - 1] == '÷' || expression[expression.length - 1] == '.' || expression[expression.length - 1] == 'e')
-            return false;
-        if (/e[×÷%]/.test(expression))
-            return false;
-        return true;
-    },
-
     calculate: function (expression) {
         if (expression != "") {
-            if (this.isValidExpression(expression)) {
+            try {
                 //trim zero
                 expression = expression.replace(/(\d*\.?\d+(?:e\+)?(?:e\-)?\d*)(?=%)/g, "($1").replace(/%/g, "*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
                 //alert(expression)
@@ -200,8 +176,7 @@ Calculator.prototype =
                     this.error = true;
                     return "error";
                 }
-            }
-            else {
+            } catch (e) {
                 this.error = true;
                 return "error";
             }
@@ -221,5 +196,4 @@ Calculator.prototype =
     }
 }
 
-module.exports.isValidExpression = Calculator.prototype.isValidExpression;
 module.exports.calculate = Calculator.prototype.calculate;
