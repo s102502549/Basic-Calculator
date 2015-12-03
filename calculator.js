@@ -19,17 +19,17 @@ function Calculator() {
         node.addEventListener("click", function () {
             if (!this.error) {
                 this.result.innerHTML = this.result.innerHTML + node.innerHTML;
-                this.result.scrollLeft+=40;
+                this.result.scrollLeft += 40;
             }
         }.bind(this));
     }.bind(this));
     //add listener for dot
     document.querySelector("#dot").addEventListener("click", function () {
         if (!this.error) {
-            var tmp=this.result.innerHTML.split(/[\+\-×÷]/);
+            var tmp = this.result.innerHTML.split(/[\+\-×÷]/);
             //alert(tmp[tmp.length-1]);
-            if (tmp[tmp.length-1].search(/\./)==-1) {
-                this.result.innerHTML = this.result.innerHTML+".";
+            if (tmp[tmp.length - 1].search(/\./) == -1) {
+                this.result.innerHTML = this.result.innerHTML + ".";
             }
         }
     }.bind(this));
@@ -59,7 +59,7 @@ function Calculator() {
         this.result.innerHTML = "";
         this.text.innerHTML = "";
         this.error = false;
-        document.querySelector("#clear").style.color="black";
+        document.querySelector("#clear").style.color = "black";
     }.bind(this));
     //add listener for mc
     document.querySelector("#mc").addEventListener("click", function () {
@@ -91,7 +91,7 @@ function Calculator() {
             if (resolve == "error") {
                 this.result.innerHTML = "error";
                 this.text.innerHTML = "error";
-                document.querySelector("#clear").style.color="red";
+                document.querySelector("#clear").style.color = "red";
             }
         }
     }.bind(this));
@@ -109,7 +109,7 @@ function Calculator() {
             if (resolve == "error") {
                 this.result.innerHTML = "error";
                 this.text.innerHTML = "error";
-                document.querySelector("#clear").style.color="red";
+                document.querySelector("#clear").style.color = "red";
             }
         }
     }.bind(this));
@@ -117,7 +117,7 @@ function Calculator() {
     document.querySelector("#pm").addEventListener("click", function () {
         if (!this.error) {
             this.result.innerHTML = this.neg(this.result.innerHTML);
-            this.result.scrollLeft+=40;
+            this.result.scrollLeft += 40;
         }
     }.bind(this));
     //add listener for =
@@ -132,7 +132,7 @@ function Calculator() {
                 if (resolve == "error") {
                     this.result.innerHTML = "error";
                     this.text.innerHTML = "error";
-                    document.querySelector("#clear").style.color="red";
+                    document.querySelector("#clear").style.color = "red";
                 }
             }
         }.bind(this));
@@ -167,7 +167,7 @@ Calculator.prototype =
         if (expression != "") {
             if (this.isValidExpression(expression)) {
                 //trim zero
-                expression = expression.replace(/%/g, "*1/100").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g,".").replace(/0+(?=\d+\.)/g,"");
+                expression = expression.replace(/%/g, "*1/100").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
                 var resolve = eval(expression);
                 if (resolve.toString() == "NaN") {
                     this.error = true;
