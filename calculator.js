@@ -2,7 +2,7 @@ function Calculator() {
     this.text = document.querySelector("#text");
     this.result = document.querySelector("#result");
     this.error = false;
-    this.mem = 0;
+    this.mem = "";
     //add listener for every button click style
     [].forEach.call(document.querySelectorAll("button"), function (node) {
         node.addEventListener("touchstart", function (e) {
@@ -48,6 +48,7 @@ function Calculator() {
         this.result.innerHTML = "";
         this.text.innerHTML = "";
         this.error = false;
+        document.querySelector("#clear").style.color="black";
     }.bind(this));
     //add listener for mc
     document.querySelector("#mc").addEventListener("click", function () {
@@ -69,8 +70,8 @@ function Calculator() {
     document.querySelector("#mp").addEventListener("click", function () {
         if (!this.error) {
             var resolve = this.calculate(this.result.innerHTML);
-            if (resolve.toString() != "" && resolve.toString() != "error") {
-                this.mem = this.mem + resolve;
+            if (resolve != "" && resolve != "error") {
+                this.mem = this.calculate(this.mem + "+" + resolve);
                 [].forEach.call(document.querySelectorAll(".m"), function (node) {
                     node.style.color = "red";
                 });
@@ -79,6 +80,7 @@ function Calculator() {
             if (resolve == "error") {
                 this.result.innerHTML = "error";
                 this.text.innerHTML = "error";
+                document.querySelector("#clear").style.color="red";
             }
         }
     }.bind(this));
@@ -86,8 +88,8 @@ function Calculator() {
     document.querySelector("#mm").addEventListener("click", function () {
         if (!this.error) {
             var resolve = this.calculate(this.result.innerHTML);
-            if (resolve.toString() != "" && resolve.toString() != "error") {
-                this.mem = this.mem - resolve;
+            if (resolve != "" && resolve != "error") {
+                this.mem = this.mem = this.calculate(this.mem + "-" + resolve);
                 [].forEach.call(document.querySelectorAll(".m"), function (node) {
                     node.style.color = "red";
                 });
@@ -96,6 +98,7 @@ function Calculator() {
             if (resolve == "error") {
                 this.result.innerHTML = "error";
                 this.text.innerHTML = "error";
+                document.querySelector("#clear").style.color="red";
             }
         }
     }.bind(this));
@@ -117,6 +120,7 @@ function Calculator() {
                 if (resolve == "error") {
                     this.result.innerHTML = "error";
                     this.text.innerHTML = "error";
+                    document.querySelector("#clear").style.color="red";
                 }
             }
         }.bind(this));
@@ -154,9 +158,9 @@ Calculator.prototype =
                     return "error";
                 }
                 if (!(resolve >= 1e100 || resolve <= -1e100)) {
-                    resolve = parseFloat(resolve.toPrecision(15));
-                    if (resolve.toString().length > 15)
-                        return resolve.toExponential(15);
+                    resolve = resolve.toPrecision(10).replace(/(\.[0-9]*[1-9])0*|(\.0*)/, "$1");
+                    if (resolve.length > 11)
+                        return parseFloat(resolve).toExponential(9).replace(/(\.[0-9]*[1-9])0*|(\.0*)/, "$1");
                     else
                         return resolve;
                 }
@@ -185,5 +189,5 @@ Calculator.prototype =
     }
 }
 
-module.export.isValidExpression = Calculator.prototype.isValidExpression;
-module.export.calculate = Calculator.prototype.calculate;
+module.exports.isValidExpression = Calculator.prototype.isValidExpression;
+module.exports.calculate = Calculator.prototype.calculate;

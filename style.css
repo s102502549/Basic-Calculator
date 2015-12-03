@@ -8,7 +8,7 @@ body {
 
 p {
     position: absolute;
-    font-size: 30px;
+    font-size: 40px;
     max-width: 100%;
     overflow: scroll;
     white-space: nowrap;
@@ -22,15 +22,13 @@ p {
 }
 
 #text {
-    border: 1px solid blue;
-    top: -30px;
+    top: -40px;
     right: 0px;
 }
 
 #result {
-    bottom: -30px;
+    bottom: -40px;
     right: 0px;
-    border: 1px solid red;
 }
 
 #buttons {
