@@ -33,6 +33,16 @@ function Calculator() {
             }
         }
     }.bind(this));
+    //add listener for %
+    document.querySelector("#per").addEventListener("click", function () {
+        if (!this.error) {
+            var tmp = this.result.innerHTML.split(/[\+\-×÷]/);
+            //alert(tmp[tmp.length-1]);
+            if (tmp[tmp.length - 1].search(/%/) == -1) {
+                this.result.innerHTML = this.result.innerHTML + "%";
+            }
+        }
+    }.bind(this));
     //add listener for back
     document.querySelector("#back").addEventListener("click", function () {
         if (!this.error) {
@@ -152,7 +162,7 @@ Calculator.prototype =
         if (/[\+\-][\+\-]/.test(expression))
             return false;
         //% cannot have digit or dot follow them
-        if (/%[\d\.]/.test(expression))
+        if (/%[\d\.%]/.test(expression))
             return false;
         //first char cannot be × ÷ %
         if (expression[0] == '×' || expression[0] == '÷' || expression[0] == '%')
@@ -167,7 +177,8 @@ Calculator.prototype =
         if (expression != "") {
             if (this.isValidExpression(expression)) {
                 //trim zero
-                expression = expression.replace(/%/g, "*1/100").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
+                expression = expression.replace(/(\d*\.?\d+)(?=%)/g,"($1").replace(/%/g,"*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
+               //alert(expression)
                 var resolve = eval(expression);
                 if (resolve.toString() == "NaN") {
                     this.error = true;

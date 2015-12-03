@@ -19,9 +19,6 @@ describe('test Caculator protype function', function () {
             it('2+3-2%×13÷100  (complex)', function () {
                 assert.equal(true, cal.isValidExpression("2+3-2%×13÷100"));
             })
-            it('2%%-3%+4%%%  (many %)', function () {
-                assert.equal(true, cal.isValidExpression("2%%-3%+4%%%"));
-            })
         })
         describe('test calculate()', function () {
             it('2+3  (simple)', function () {
@@ -29,9 +26,6 @@ describe('test Caculator protype function', function () {
             })
             it('2+3-2%×13÷100  (complex)', function () {
                 assert.equal("4.9974", cal.calculate("2+3-2%×13÷100"));
-            })
-            it('2%%-3%+4%%%  (many %)', function () {
-                assert.equal("-0.029796", cal.calculate("2%%-3%+4%%%"));
             })
             it('99999999×12345678  (big)', function () {
                 assert.equal("1.234567788e+15", cal.calculate("99999999×12345678"));
@@ -63,6 +57,9 @@ describe('test Caculator protype function', function () {
             })
             it('2%+4%%+%+2%  (lack of operand)', function () {
                 assert.equal(false, cal.isValidExpression("2%+4%%+%+2%"));
+            })
+            it('2%%-3%+4%%%  (repeat %)', function () {
+                assert.equal(false, cal.isValidExpression("2%%-3%+4%%%"));
             })
             it('2++3  (repeat operator)', function () {
                 assert.equal(false, cal.isValidExpression("2++3"));
