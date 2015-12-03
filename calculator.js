@@ -19,8 +19,19 @@ function Calculator() {
         node.addEventListener("click", function () {
             if (!this.error) {
                 this.result.innerHTML = this.result.innerHTML + node.innerHTML;
+                this.result.scrollLeft+=40;
             }
         }.bind(this));
+    }.bind(this));
+    //add listener for dot
+    document.querySelector("#dot").addEventListener("click", function () {
+        if (!this.error) {
+            var tmp=this.result.innerHTML.split(/[\+\-×÷]/);
+            //alert(tmp[tmp.length-1]);
+            if (tmp[tmp.length-1].search(/\./)==-1) {
+                this.result.innerHTML = this.result.innerHTML+".";
+            }
+        }
     }.bind(this));
     //add listener for back
     document.querySelector("#back").addEventListener("click", function () {
@@ -106,6 +117,7 @@ function Calculator() {
     document.querySelector("#pm").addEventListener("click", function () {
         if (!this.error) {
             this.result.innerHTML = this.neg(this.result.innerHTML);
+            this.result.scrollLeft+=40;
         }
     }.bind(this));
     //add listener for =
@@ -139,8 +151,8 @@ Calculator.prototype =
         //+- cannot repeat
         if (/[\+\-][\+\-]/.test(expression))
             return false;
-        //% cannot have digit follow them
-        if (/%\d/.test(expression))
+        //% cannot have digit or dot follow them
+        if (/%[\d\.]/.test(expression))
             return false;
         //first char cannot be × ÷ %
         if (expression[0] == '×' || expression[0] == '÷' || expression[0] == '%')
@@ -154,15 +166,18 @@ Calculator.prototype =
     calculate: function (expression) {
         if (expression != "") {
             if (this.isValidExpression(expression)) {
-                expression = expression.replace(/%/g, "*1/100").replace(/×/g, "*").replace(/÷/g, "/");
+                //trim zero
+                expression = expression.replace(/%/g, "*1/100").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g,".").replace(/0+(?=\d+\.)/g,"");
                 var resolve = eval(expression);
                 if (resolve.toString() == "NaN") {
                     this.error = true;
                     return "error";
                 }
                 if (!(resolve >= 1e100 || resolve <= -1e100)) {
+                    //trim zero
                     resolve = resolve.toPrecision(10).replace(/(\.[0-9]*[1-9])0*|(\.0*)/, "$1");
                     if (resolve.length > 11)
+                    //trim zero
                         return parseFloat(resolve).toExponential(9).replace(/(\.[0-9]*[1-9])0*|(\.0*)/, "$1");
                     else
                         return resolve;
