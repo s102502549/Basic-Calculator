@@ -120,7 +120,6 @@ function Calculator() {
                 if (resolve == "error") {
                     this.result.innerHTML = "error";
                     this.text.innerHTML = "error";
-                    document.querySelector("#clear").style.color="red";
                 }
             }
         }.bind(this));
@@ -131,10 +130,13 @@ Calculator.prototype =
 {
     isValidExpression: function (expression) {
         //operator must have digit follow them
-        if (/[\.\+\-×÷][\+\-×÷%]/.test(expression))
+        if (/[\.\+\-×÷][×÷%]/.test(expression))
             return false;
-        //dot cannot reapeat
-        if (/\.\./.test(expression))
+        //dot cannot have .+- follow them
+        if (/\.[\.\+\-]/.test(expression))
+            return false;
+        //+- cannot repeat
+        if (/[\+\-][\+\-]/.test(expression))
             return false;
         //% cannot have digit follow them
         if (/%\d/.test(expression))

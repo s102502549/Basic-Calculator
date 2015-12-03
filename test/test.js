@@ -10,6 +10,9 @@ describe('test Caculator protype function', function(){
             it('+3+2  (head operator)', function(){
                 assert.equal(true, cal.isValidExpression("+3+2"));
             })
+            it('2×+3  (repeat operator)', function(){
+                assert.equal(true, cal.isValidExpression("2×+3"));
+            })
             it('2+3-2%×13÷100  (complex)', function(){
                 assert.equal(true, cal.isValidExpression("2+3-2%×13÷100"));
             })
