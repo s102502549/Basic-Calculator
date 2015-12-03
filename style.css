@@ -3,7 +3,15 @@ html {
 }
 
 body {
-    height: 95%;
+    height: 97%;
+}
+
+p {
+    position: absolute;
+    font-size: 30px;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
 }
 
 #display {
@@ -12,18 +20,14 @@ body {
     height: 20%;
     border: 1px solid black;
 }
-#text
-{
+
+#text {
     border: 1px solid blue;
-    position: absolute;
-    font-size: 30px;
     top: -30px;
     right: 0px;
 }
 
 #result {
-    position: absolute;
-    font-size: 30px;
     bottom: -30px;
     right: 0px;
     border: 1px solid red;
@@ -35,9 +39,11 @@ body {
     border: 1px solid green;
 }
 
-.button {
+button {
+    color: black;
     width: 25%;
     height: 16.66%;
     float: left;
     font-size: 100%;
+    background: linear-gradient(to bottom, white, lightgray);
 }
