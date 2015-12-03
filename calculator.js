@@ -40,6 +40,7 @@ function Calculator() {
             //alert(tmp[tmp.length-1]);
             if (tmp[tmp.length - 1].search(/%/) == -1) {
                 this.result.innerHTML = this.result.innerHTML + "%";
+                this.result.scrollLeft += 40;
             }
         }
     }.bind(this));
@@ -168,7 +169,9 @@ Calculator.prototype =
         if (expression[0] == '×' || expression[0] == '÷' || expression[0] == '%')
             return false;
         //last char must be number or %
-        if (expression[expression.length - 1] == '+' || expression[expression.length - 1] == '-' || expression[expression.length - 1] == '×' || expression[expression.length - 1] == '÷' || expression[expression.length - 1] == '.')
+        if (expression[expression.length - 1] == '+' || expression[expression.length - 1] == '-' || expression[expression.length - 1] == '×' || expression[expression.length - 1] == '÷' || expression[expression.length - 1] == '.' || expression[expression.length - 1] == 'e')
+            return false;
+        if (/e[×÷%]/.test(expression))
             return false;
         return true;
     },
@@ -177,8 +180,8 @@ Calculator.prototype =
         if (expression != "") {
             if (this.isValidExpression(expression)) {
                 //trim zero
-                expression = expression.replace(/(\d*\.?\d+)(?=%)/g,"($1").replace(/%/g,"*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
-               //alert(expression)
+                expression = expression.replace(/(\d*\.?\d+(?:e\+)?(?:e\-)?\d*)(?=%)/g, "($1").replace(/%/g, "*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
+                //alert(expression)
                 var resolve = eval(expression);
                 if (resolve.toString() == "NaN") {
                     this.error = true;
