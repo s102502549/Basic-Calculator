@@ -120,6 +120,7 @@ function Calculator() {
                 if (resolve == "error") {
                     this.result.innerHTML = "error";
                     this.text.innerHTML = "error";
+                    document.querySelector("#clear").style.color="red";
                 }
             }
         }.bind(this));
