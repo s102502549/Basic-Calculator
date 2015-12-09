@@ -1,5 +1,6 @@
 # LuckyPig-Calculator
 Author: LuckyPig
+Version: 1.0.0
 
 Description
 -------------

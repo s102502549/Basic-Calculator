@@ -2,7 +2,7 @@ function Calculator() {
     this.text = document.querySelector("#text");
     this.result = document.querySelector("#result");
     this.error = false;
-    this.mem = "";
+    this.mem = "0";
     //add listener for every button click style
     [].forEach.call(document.querySelectorAll("button"), function (node) {
         node.addEventListener("touchstart", function (e) {
@@ -63,7 +63,7 @@ function Calculator() {
     //add listener for mc
     document.querySelector("#mc").addEventListener("click", function () {
         if (!this.error) {
-            this.mem = 0;
+            this.mem = "0";
             [].forEach.call(document.querySelectorAll(".m"), function (node) {
                 node.style.color = "black";
             });
@@ -72,7 +72,7 @@ function Calculator() {
     //add listener for mr
     document.querySelector("#mr").addEventListener("click", function () {
         if (!this.error) {
-            this.result.innerHTML = this.mem.toString();
+            this.result.innerHTML = this.mem;
             this.text.innerHTML = "M=";
         }
     }.bind(this));
@@ -292,6 +292,6 @@ Calculator.prototype =
     isPmNum: function (c) {
         return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '.' || c == 'e';
     }
-}
+};
 
 module.exports.calculate = Calculator.prototype.calculate;

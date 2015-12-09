@@ -1,6 +1,7 @@
 {
   "name": "LuckyPig Calculator",
   "description": "A basic Calculator",
+  "version": "1.0.0",
   "launch_path": "/index.html",
   "orientation": "portrait-primary",
   "icons": {
