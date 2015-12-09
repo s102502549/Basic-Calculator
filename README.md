@@ -12,5 +12,5 @@ Function
 3.number range is -1e100 to 1e100
 
 Remark
-------
-Though you can use the exponential sign 'e' by counting a long number first, but this is deprecated since exponential is not a standard function that this calculator offers.
+--------
+Though you can use the scientific notation 'e' by counting a long number first, but this is deprecated since this is not a standard function that the calculator offers and may cause bugs.

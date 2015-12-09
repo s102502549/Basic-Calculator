@@ -15,7 +15,7 @@ function Calculator() {
         });
     });
     //add listener for every number button
-    [].forEach.call(document.querySelectorAll(".ex"), function (node) {
+    [].forEach.call(document.querySelectorAll(".num"), function (node) {
         node.addEventListener("click", function () {
             if (!this.error) {
                 this.result.innerHTML = this.result.innerHTML + node.innerHTML;
@@ -27,20 +27,8 @@ function Calculator() {
     document.querySelector("#dot").addEventListener("click", function () {
         if (!this.error) {
             var tmp = this.result.innerHTML.split(/[\+\-×÷]/);
-            //alert(tmp[tmp.length-1]);
             if (tmp[tmp.length - 1].search(/\./) == -1) {
                 this.result.innerHTML = this.result.innerHTML + ".";
-            }
-        }
-    }.bind(this));
-    //add listener for %
-    document.querySelector("#per").addEventListener("click", function () {
-        if (!this.error) {
-            var tmp = this.result.innerHTML.split(/[\+\-×÷]/);
-            //alert(tmp[tmp.length-1]);
-            if (tmp[tmp.length - 1].search(/%/) == -1) {
-                this.result.innerHTML = this.result.innerHTML + "%";
-                this.result.scrollLeft += 40;
             }
         }
     }.bind(this));
@@ -127,8 +115,121 @@ function Calculator() {
     //add listener for +/-
     document.querySelector("#pm").addEventListener("click", function () {
         if (!this.error) {
-            this.result.innerHTML = this.neg(this.result.innerHTML);
-            this.result.scrollLeft += 40;
+            if (this.result.innerHTML != "") {
+                var start, isStart = false;
+                //find last number start
+                for (var i = this.result.innerHTML.length - 1; i >= 0; i--) {
+                    if (this.isPmNum(this.result.innerHTML.charAt(i))) {
+                        isStart = true;
+                        start = i;
+                    }
+                    else if (isStart && !this.isPmNum(this.result.innerHTML.charAt(i)) && this.result.innerHTML.charAt(i - 1) != 'e') {
+                        break;
+                    }
+                }
+                if (start == 0) {
+                    this.result.innerHTML = "-" + this.result.innerHTML;
+                    this.result.scrollLeft += 40;
+                }
+                else if (start == 1 && this.result.innerHTML.charAt(0) != '%') {
+                    this.result.innerHTML = this.result.innerHTML.substring(1);
+                    this.result.scrollLeft += 40;
+                }
+                else if ((this.result.innerHTML.charAt(start - 1) == '+' || this.result.innerHTML.charAt(start - 1) == '-') && (this.result.innerHTML.charAt(start - 2) != '×' && this.result.innerHTML.charAt(start - 2) != '÷')) {
+                    if (this.result.innerHTML.charAt(start - 1) == '+') {
+                        this.result.innerHTML = this.result.innerHTML.substring(0, start - 1) + "-" + this.result.innerHTML.substring(start);
+                        this.result.scrollLeft += 40;
+                    } else {
+                        this.result.innerHTML = this.result.innerHTML.substring(0, start - 1) + "+" + this.result.innerHTML.substring(start);
+                        this.result.scrollLeft += 40;
+                    }
+                }
+                else if ((this.result.innerHTML.charAt(start - 1) == '+' || this.result.innerHTML.charAt(start - 1) == '-')) {
+                    this.result.innerHTML = this.result.innerHTML.substring(0, start - 1) + this.result.innerHTML.substring(start);
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.charAt(start - 1) == '%' || this.result.innerHTML.charAt(start - 1) == '×' || this.result.innerHTML.charAt(start - 1) == '÷') {
+                    this.result.innerHTML = this.result.innerHTML.substring(0, start) + "-" + this.result.innerHTML.substring(start);
+                    this.result.scrollLeft += 40;
+                }
+            }
+        }
+    }.bind(this));
+    //add listener for ×
+    document.querySelector("#mul").addEventListener("click", function () {
+        if (!this.error) {
+            if (this.result.innerHTML != "") {
+                if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 1))) {
+                    this.result.innerHTML = this.result.innerHTML + "×";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.length == 1 && this.result.innerHTML.charAt(0) == '-') {
+                    this.result.innerHTML = "";
+                }
+                else if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 2))) {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 1) + "×";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '-') {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 2) + "×";
+                    this.result.scrollLeft += 40;
+                }
+            }
+        }
+    }.bind(this));
+    //add listener for ÷
+    document.querySelector("#div").addEventListener("click", function () {
+        if (!this.error) {
+            if (this.result.innerHTML != "") {
+                if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 1))) {
+                    this.result.innerHTML = this.result.innerHTML + "÷";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.length == 1 && this.result.innerHTML.charAt(0) == '-') {
+                    this.result.innerHTML = "";
+                }
+                else if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 2))) {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 1) + "÷";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '-') {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 2) + "÷";
+                    this.result.scrollLeft += 40;
+                }
+            }
+        }
+    }.bind(this));
+    //add listener for +
+    document.querySelector("#add").addEventListener("click", function () {
+        if (!this.error) {
+            if (this.result.innerHTML != "") {
+                if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 1))) {
+                    this.result.innerHTML = this.result.innerHTML + "+";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.length == 1 && this.result.innerHTML.charAt(0) == '-') {
+                    this.result.innerHTML = "";
+                }
+                else if (!this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 2))) {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 1) + "+";
+                    this.result.scrollLeft += 40;
+                }
+                else if (this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '-') {
+                    this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 2) + "+";
+                    this.result.scrollLeft += 40;
+                }
+            }
+        }
+    }.bind(this));
+    //add listener for -
+    document.querySelector("#sub").addEventListener("click", function () {
+        if (!this.error) {
+            if (this.result.innerHTML == "" || (this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '×' || this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '÷') || !this.isOperator(this.result.innerHTML.charAt(this.result.innerHTML.length - 1)))
+                this.result.innerHTML = this.result.innerHTML + "-";
+            else if (this.result.innerHTML.charAt(this.result.innerHTML.length - 1) == '+') {
+                this.result.innerHTML = this.result.innerHTML.substr(0, this.result.innerHTML.length - 1) + "-";
+                this.result.scrollLeft += 40;
+            }
         }
     }.bind(this));
     //add listener for =
@@ -155,9 +256,8 @@ Calculator.prototype =
     calculate: function (expression) {
         if (expression != "") {
             try {
-                //trim zero
-                expression = expression.replace(/(\d*\.?\d+(?:e\+)?(?:e\-)?\d*)(?=%)/g, "($1").replace(/%/g, "*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
-                //alert(expression)
+                //solve %, leading/trailing zero, and ×÷ problems
+                expression = expression.replace(/(\d+\.?\d*(?:e\+\d+)?(?:e\-\d+)?|\d*\.?\d+(?:e\+\d+)?(?:e\-\d+)?)(?=%)/g, "($1").replace(/%(?=%)/g, "*1/100").replace(/%/g, "*1/100)").replace(/×/g, "*").replace(/÷/g, "/").replace(/0+\./g, ".").replace(/0+(?=\d+\.)/g, "");
                 var resolve = eval(expression);
                 if (resolve.toString() == "NaN") {
                     this.error = true;
@@ -185,14 +285,12 @@ Calculator.prototype =
             return "";
     },
 
-    neg: function (numString) {
-        if (numString[0] == '+')
-            numString = "-" + numString.substr(1, numString.length - 1);
-        else if (numString[0] == '-')
-            numString = numString.substr(1, numString.length - 1);
-        else
-            numString = "-" + numString;
-        return numString;
+    isOperator: function (c) {
+        return c == '+' || c == '-' || c == '×' || c == '÷';
+    },
+
+    isPmNum: function (c) {
+        return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '.' || c == 'e';
     }
 }
 

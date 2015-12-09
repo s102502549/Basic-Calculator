@@ -19,8 +19,8 @@ describe('test Caculator protype function', function () {
             it('00.23+00.24  (leading zero)', function () {
                 assert.equal("0.47", cal.calculate("00.23+00.24"));
             })
-            it('002.35+2.001  (leading zero)', function () {
-                assert.equal("4.351", cal.calculate("002.35+2.001"));
+            it('2.35000+2.001  (trailing zero)', function () {
+                assert.equal("4.351", cal.calculate("2.35000+2.001"));
             })
         })
     })
